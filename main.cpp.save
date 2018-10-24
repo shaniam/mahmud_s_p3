@@ -1,0 +1,68 @@
+#include <iostream>
+#include <utility>
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#include <vector>
+#include <stdio.h>
+#include <math.h>
+#include <algorithm>
+#include <ctime>
+
+using namespace std;
+
+vector<pair<int, int, int>> greedyOne(vecs, cap){
+
+	vector<pair<pair<int, int> int>> arr={}
+	float vecs;
+	for (i=0; i<vecs.size(); i++){
+		ratio=vecs[i].first/vecs[i].second;
+		arr.push_back<vecs[i], ratio>;
+	}
+	
+
+
+
+}
+
+void read_plf(string namers, int arg){
+	ifstream filen;
+	filen.open(namers);
+	if (filen.is_open()==false){
+		cerr << " file does not exist " << endl;
+	}
+	vector<pair<string, int>> vecs;
+	int first, cap, price;
+	int weight;
+	filen >> first >> cap;
+	int i=1;
+	vector<pair<string, int>> eval;
+	while(!filen.eof()){
+		if(i<=first){
+			filen >>  weight >> price;
+			pair<int, int> element=make_pair(weight,price);
+			vecs.push_back(element);
+		}
+		else{
+			if (arg==0){
+				greedy1(vecs, cap);
+			}
+			else if(arg==1){
+				greedy2(vecs, cap);
+			}
+			else if(arg==2){
+				knapsack(vecs, cap);
+			}
+			vecs={};
+			i=0;
+			filen >> first >> cap;
+		}
+		i++;
+	}
+	filen.close();
+}
+int main(int argc, char* argv[]){
+
+	read_plf(argv[1], cards);
+
+}
