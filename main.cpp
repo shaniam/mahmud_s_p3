@@ -12,7 +12,7 @@
 using namespace std;
 
 pair<pair<int, int> ,vector<pair<int, int>>> greedyOne(vector<pair<int, int>> vecs, int cap){
-
+	cerr << "hello " << endl;
 	vector<pair<int,int>> arr={};
 	vector<pair<int, int>> ret_arr={};
 	float ratio;
@@ -36,15 +36,15 @@ pair<pair<int, int> ,vector<pair<int, int>>> greedyOne(vector<pair<int, int>> ve
 			max_profit+=vecs[x.second].second;
 			ret_arr.push_back(vecs[x.second]);
 		}
-		else{
+/*		else{
 		break;
-		}
+		}*/
 		//if(curr>cap){
 		//	break;
 		//}
 	}
 //	cerr << vecs.size() << endl;
-//	cerr << max_profit << endl;
+	cerr << max_profit << endl;
 	pair<pair<int, int>,vector<pair<int, int>>> retVal=make_pair(make_pair( i, (int)max_profit),arr);
 	//etVal.push_back(max_profit);
 	return retVal;
@@ -107,6 +107,7 @@ void read_plf(string namers, int arg, string outs){
 			filen >>  weight >> price;
 			pair<int, int> element=make_pair(weight,price);
 			vecs.push_back(element);
+			i++;
 		}
 		else{
 			if (arg==0){
@@ -132,10 +133,10 @@ void read_plf(string namers, int arg, string outs){
                                 }
 			}
 			vecs={};
-			i=0;
+			i=1;
 			filen >> first >> cap;
 		}
-		i++;
+		//i++;
 	}
 	filen.close();
 	out.close();

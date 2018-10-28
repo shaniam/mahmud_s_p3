@@ -17,12 +17,12 @@ using namespace std;
 //float kwf2( int i, int weight, int profit,  vector<pair<int, int>> arr, int cap, int n);
 bool promising(int i, int weight, int profit, vector<pair<int, int>> arr, int cap, int n, int maxprofit);
 float kwf2( int i, int weight, int profit,    vector<pair<int, int>> arr, int cap, int n);
-int max_profit=0;
+int max_profit;
 
 pair<pair<int, int> ,vector<pair<int, int>>> greedyOne(vector<pair<int, int>> vecs, int cap){
 
 	vector<pair<int,int>> arr={};
-	vector<pair<int, int>> ret_arr={};
+	vector<pair<float, int>> ret_arr={};
 	float ratio;
 	int i;
 	for ( i=0; i<vecs.size(); i++){
@@ -37,9 +37,6 @@ pair<pair<int, int> ,vector<pair<int, int>>> greedyOne(vector<pair<int, int>> ve
 			curr+=vecs[x.second].first;
 			max_profit+=vecs[x.second].second;
 			ret_arr.push_back(vecs[x.second]);
-		}
-		else{
-		break;
 		}
 	}
 	pair<pair<int, int>,vector<pair<int, int>>> retVal=make_pair(make_pair( i, (int)max_profit),arr);
@@ -60,6 +57,7 @@ pair<pair<int, int> ,vector<pair<int, int>>> greedyTwo(vector<pair<int, int>> ve
 			maxing={x};
 		}
 	}
+	//cerr << mp1 << endl;
 	if(profit<mp1){
 		profit=mp1;
 	}
@@ -72,13 +70,9 @@ pair<pair<int, int> ,vector<pair<int, int>>> greedyTwo(vector<pair<int, int>> ve
 
 int knapSack(int i, int profit, int weight, vector<pair<int, int>> arr , int cap){
 	//int max_profit;
-	//if (profit == 90){
-	//	cerr << "yo" << endl;
-	//}
-	//cerr << i << " " <<  "yo " << endl;
 	if (i==-1){
-		//max_profit=greedyTwo(arr, cap).first.second;
-		max_profit=0;
+		//cerr << "hello" << endl;
+		max_profit=greedyTwo(arr, cap).first.second;
 	}
 	if (weight <= cap && profit > max_profit){
 		max_profit=profit;
@@ -92,6 +86,7 @@ int knapSack(int i, int profit, int weight, vector<pair<int, int>> arr , int cap
 }
 bool promising(int i, int weight, int profit, vector<pair<int, int>> arr, int cap, int n, int maxprofit ){
 	if (weight >= cap) {return false;}
+	//cerr << "hello" << endl;
 	float bound = kwf2(i+1, weight, profit, arr, cap, arr.size());
 	return (bound>maxprofit);
 }
@@ -135,6 +130,7 @@ void read_plf(string namers, int arg, string outs){
 	filen.open(namers);
 	if (filen.is_open()==false){
 		cerr << " file does not exist " << endl;
+		return;
 	}
 	vector<pair<int, int>> vecs;
 	int first, cap, price;
@@ -148,6 +144,7 @@ void read_plf(string namers, int arg, string outs){
 			filen >>  weight >> price;
 			pair<int, int> element=make_pair(weight,price);
 			vecs.push_back(element);
+			i++;
 		}
 		else{
 			if (arg==0){
@@ -171,21 +168,24 @@ void read_plf(string namers, int arg, string outs){
                 			ratio=(float)vecs[i].second/vecs[i].first;
                 			arr.push_back(make_pair(ratio, i));
         			}
-				
         			sort(arr.rbegin(), arr.rend());
 				for (auto x : arr){
 					other.push_back(vecs[x.second]);
-				
 				}
 				pair<pair<int, int>,vector<pair<int, int>>> g2=greedyTwo(vecs, cap);
 				int best=knapSack(-1,0,0, other, cap);
-				cerr << best << endl;
+				cerr << "best : " << best << endl;
 			}
 			vecs={};
-			i=0;
+			i=1;
 			filen >> first >> cap;
 		}
-		i++;
+		//i++;
+		/*if (i == first){
+			vecs={};
+                        i=1;
+                        filen >> first >> cap;
+		}*/
 	}
 	filen.close();
 	out.close();
