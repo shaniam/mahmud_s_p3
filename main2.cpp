@@ -73,7 +73,6 @@ int knapSack(int i, int profit, int weight, vector<pair<int, int>> arr , int cap
 	if (i==-1){
 		//cerr << "hello" << endl;
 		max_profit=greedyTwo(arr, cap).first.second;
-		//max_profit=0;
 	}
 	if (weight <= cap && profit > max_profit){
 		max_profit=profit;
