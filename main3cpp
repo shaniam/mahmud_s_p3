@@ -94,16 +94,16 @@ bool promising(int i, int weight, int profit, vector<pair<int, int>> arr, int ca
 
 float kwf2( int i, int weight, int profit,  vector<pair<int, int>> arr, int cap, int n){
 	float bound = profit;
-	vector<float> x={};
-	for (int j=0; j<i; j++){
+	//vector<float> x={};
+	/*for (int j=0; j<i; j++){
 		x.push_back(0);
 	}
 	for (int j=i; j <n; j++){
 		if (weight<=cap){
 			x.push_back(0); 
 		}
-	}
-
+	}*/
+	double frac;
 	while ( (weight < cap ) && (i<n)){
 		if(weight + (arr[i].first) <= cap){
 			x[i]=1;
@@ -111,9 +111,9 @@ float kwf2( int i, int weight, int profit,  vector<pair<int, int>> arr, int cap,
 			bound = bound + arr[i].second;
 		}
 		else{
-			x[i]=(float)((cap-weight)/(arr[i].first));
+			frac=(double)(cap-weight)/(arr[i].first);
 			weight = cap;
-			bound = bound + (arr[i].second * x[i]);
+			bound = bound + (arr[i].second * frac);
 
 		}
 

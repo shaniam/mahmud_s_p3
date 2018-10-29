@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <ctime>
 #include <functional>
+#include <time.h>
 using namespace std;
 
 
@@ -94,26 +95,26 @@ bool promising(int i, int weight, int profit, vector<pair<int, int>> arr, int ca
 
 float kwf2( int i, int weight, int profit,  vector<pair<int, int>> arr, int cap, int n){
 	float bound = profit;
-	vector<float> x={};
-	for (int j=0; j<i; j++){
+	//vector<float> x={};
+	/*for (int j=0; j<i; j++){
 		x.push_back(0);
 	}
 	for (int j=i; j <n; j++){
 		if (weight<=cap){
 			x.push_back(0); 
 		}
-	}
-
+	}*/
+	float frac;
 	while ( (weight < cap ) && (i<n)){
 		if(weight + (arr[i].first) <= cap){
-			x[i]=1;
+			//x[i]=1;
 			weight = weight +arr[i].first;
 			bound = bound + arr[i].second;
 		}
 		else{
-			x[i]=(float)((cap-weight)/(arr[i].first));
+			frac=(float)(cap-weight)/(arr[i].first);
 			weight = cap;
-			bound = bound + (arr[i].second * x[i]);
+			bound = bound + (arr[i].second * frac);
 
 		}
 
@@ -139,6 +140,8 @@ void read_plf(string namers, int arg, string outs){
 	filen >> first >> cap;
 	int i=1;
 	vector<int> ret;
+	clock_t begin;
+	clock_t end;
 	pair<pair<int, int> ,vector<pair<int, int>>> ret1;
 	while(!filen.eof()){
 		if(i<=first){
@@ -149,22 +152,28 @@ void read_plf(string namers, int arg, string outs){
 		}
 		else{
 			if (arg==0){
+				begin=clock();
 				ret1=greedyOne(vecs, cap);
+				end=clock();
 				if(ret1.first.second!=0){
-					out <<  ret1.first.first << " " << ret1.first.second<< endl;
+					out <<  ret1.first.first << " " << ret1.first.second << " " << (float) (1000 * end-begin) / CLOCKS_PER_SEC  << " ms" << endl;
 				}
 			}
 			else if(arg==1){
+				begin=clock();
 				ret1=greedyTwo(vecs, cap);
-                                if(ret1.first.second!=0){
-                                        out <<  ret1.first.first << " " << ret1.first.second<< endl;
+                                end=clock();
+				if(ret1.first.second!=0){
+                                        out <<  ret1.first.first << " " << ret1.first.second << " " << (float)(1000 * end-begin) / CLOCKS_PER_SEC  << " ms" << endl;
                                 }
 			}
 			else if(arg==2){
+				begin = clock();
 				vector<pair<int, int>> arr={};
 				vector<pair<int, int>> other={};
         			float ratio;
         			int i;
+				//begin= clock();
         			for ( i=0; i<vecs.size(); i++){
                 			ratio=(float)vecs[i].second/vecs[i].first;
                 			arr.push_back(make_pair(ratio, i));
@@ -174,8 +183,10 @@ void read_plf(string namers, int arg, string outs){
 					other.push_back(vecs[x.second]);
 				}
 				pair<pair<int, int>,vector<pair<int, int>>> g2=greedyTwo(vecs, cap);
+				//end = clock();
 				int best=knapSack(-1,0,0, other, cap, g2.first.second);
-				cerr << "best : " << best << endl;
+				end = clock();
+				out << vecs.size() << " " << best << " " << (float) (1000 * end-begin) / CLOCKS_PER_SEC  << " ms" << endl;
 			}
 			vecs={};
 			i=1;
